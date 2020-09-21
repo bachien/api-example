@@ -1,0 +1,28 @@
+export const testApi = () => {
+   axios.get(`http://localhost:5000/api/count`).then((res) => {
+     console.log(res);
+   });
+};
+
+export const plusApi = () => {
+  let req = {
+    count: 10
+  }
+  axios.post(`http://localhost:5000/api/count/plus`, req).then((res) => {
+    console.log(res);
+  });
+};
+
+
+
+export const fetchData = () => {
+  return (dispatch) => {
+    axios
+      .get(`http://localhost:5000/api/count`)
+      .then((res) => {
+        console.log(res)
+        dispatch(getDataSuccess([]));
+      })
+      .catch((err) => console.log("err:", err));
+  };
+};
