@@ -1,28 +1,35 @@
-export const testApi = () => {
-   axios.get(`http://localhost:5000/api/count`).then((res) => {
-     console.log(res);
-   });
-};
+import axios from "axios";
 
-export const plusApi = () => {
-  let req = {
-    count: 10
-  }
-  axios.post(`http://localhost:5000/api/count/plus`, req).then((res) => {
-    console.log(res);
-  });
-};
-
-
-
-export const fetchData = () => {
+export const initCount = () => {
   return (dispatch) => {
     axios
       .get(`http://localhost:5000/api/count`)
       .then((res) => {
-        console.log(res)
-        dispatch(getDataSuccess([]));
+        console.log(res);
+        dispatch({
+          type: "INIT_COUNT",
+          payload: res.data.count,
+        });
       })
       .catch((err) => console.log("err:", err));
   };
 };
+
+export const plusCount = (count) => {
+  return (dispatch) => {
+    let req = {
+      count: count,
+    };
+    axios
+      .post(`http://localhost:5000/api/count/plus1`, req)
+      .then((res) => {
+        console.log(res);
+        dispatch({
+          type: "INCREMENT_COUNT",
+          payload: res.data.count,
+        });
+      })
+      .catch((err) => console.log("err:", err));
+  };
+};
+
